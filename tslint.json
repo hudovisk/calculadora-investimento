@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "tslint-react",
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "prettier": true,
+    "jsx-equals-spacing": "never",
+    "jsx-no-string-ref": true,
+    "jsx-self-close": true,
+    "jsx-space-before-trailing-slash": true,
+    "jsx-wrap-multiline": true
+  },
+  "linterOptions": {
+    "exclude": ["node_modules/**/*"]
+  }
+}
