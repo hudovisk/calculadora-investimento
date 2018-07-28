@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
@@ -19,12 +20,16 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /FachadaWSSGS\.wsdl$/,
-        loader: "file-loader",
-        query: {
-          limit: 1,
-          name: "[name].[ext]"
-        }
+        test: /\.s?css$/,
+        use: [
+          "style-loader", // creates style nodes from JS strings
+          "css-loader", // translates CSS into CommonJS
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"]
       }
     ]
   },
@@ -32,6 +37,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
       "@src": path.resolve(__dirname, "src"),
+      "@utils": path.resolve(__dirname, "src/utils"),
       "@features": path.resolve(__dirname, "src/features"),
       "@assets": path.resolve(__dirname, "assets")
     }
@@ -40,6 +46,7 @@ module.exports = {
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "assets/index.html")
-    })
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 };
